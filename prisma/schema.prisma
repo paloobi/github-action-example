@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Listing {
+  id            Int      @id @default(autoincrement()) // id will go up automatically each time we make a new one
+  createdAt     DateTime @default(now()) // createdAt will default to current timestamp
+  updatedAt     DateTime @updatedAt
+  title         String   @db.VarChar(255) // string of up to 255 variable characters
+  description   String? // optional field, could be a long string, or could be null
+  price         Decimal
+  seller        User     @relation(fields: [sellerId], references: [id])
+  sellerId      Int
+}
+
+model User {
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String?
+  password String
+  listings   Listing[] // list of the posts this person wrote
+}
