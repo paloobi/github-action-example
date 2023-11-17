@@ -17,7 +17,6 @@ describe('/api/listings', () => {
 
             const response = await request(app).get('/api/listings');
             
-            expect(true).toBe(false);
             expect(response.body.listings[0]).toEqual(listings[0]);
             expect(response.body.listings[1]).toEqual(listings[1]);
         });
